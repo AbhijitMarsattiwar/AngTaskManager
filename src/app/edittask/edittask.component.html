@@ -1,0 +1,60 @@
+
+<form class="form-horizontal" 
+ [formGroup]="editForm"
+ (ngSubmit)="formHandler()">
+
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="taskName">Name:</label>
+    <div class="col-sm-5"> 
+      <input type="text" formControlName="taskName" class="form-control" id="taskName" 
+              [ngClass]="{ 'is-invalid': submitted && f.taskName.errors }" placeholder="Enter Task Name">
+          <div *ngIf="submitted && f.taskName.errors" class="text-danger">
+                <div *ngIf="f.taskName.errors.required">Please enter Task Name</div>
+          </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="priority">Priority:</label>
+    <div class="col-sm-5">
+      <input type="range" formControlName="priority" class="form-control" id="priority" min="0" max="30" value="10">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2" >Parent:</label>
+    <div class="col-sm-5">
+      <select formControlName="parentTask" class="form-control">
+        <option *ngFor="let parentTask of parentArr" [ngValue]="parentTask">{{parentTask.parentTask}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="startDate">Start Date:</label>
+    <div class="col-sm-5">
+      <input type="date" formControlName="startDate" class="form-control" id="startDate" [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }">
+      <div *ngIf="submitted && f.startDate.errors" class="text-danger">
+        <div *ngIf="f.startDate.errors.required">Please select Start Date</div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="endDate">End Date:</label>
+    <div class="col-sm-5">
+      <input type="date" formControlName="endDate" class="form-control" id="endDate" [ngClass]="{ 'is-invalid': submitted && f.endDate.errors }" >
+      <div *ngIf="submitted && f.endDate.errors" class="text-danger">
+        <div *ngIf="f.endDate.errors.required">Please select End Date</div>
+      </div>
+    </div>
+  </div>
+
+ <div class="form-group"> 
+   <div class="col-sm-offset-3 col-sm-1">
+     <button type="submit" class="btn btn-primary">Update</button>
+   </div>
+  <div class="col-sm-2">
+       <button type="button" (click)="backToViewList()" class="btn btn-primary">Back</button>
+     </div>
+   </div>
+</form>
