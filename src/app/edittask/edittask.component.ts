@@ -39,6 +39,7 @@ export class EdittaskComponent implements OnInit {
 
     this.taskService.getTaskById(Number.parseInt(taskId))
       .subscribe( task => {
+        console.log(task.startDate)
         task.startDate = task.startDate.substr(0, 10);
         task.endDate = task.endDate.substr(0, 10);
         this.editForm.setValue(task);
@@ -61,7 +62,7 @@ export class EdittaskComponent implements OnInit {
   get f() { return this.editForm.controls; }
 
   formHandler(){
-    console.log(this.editForm.value);
+    //console.log(this.editForm.value);
     this.submitted = true;
     if (this.editForm.invalid) {
       return;
@@ -72,9 +73,14 @@ export class EdittaskComponent implements OnInit {
   updateTask(task:Task){
     this.taskService.updateTask(task).subscribe(
         (task)=>{
-          console.log('successfully updated'+task)
+          console.log('successfully updated'+task);
+          alert('Task Updated Successfully');
+          this.backToViewList();
         },
-        (error)=>console.log(error)
+        (error)=> { 
+          //console.log(error)
+          alert('Error Occured while saving, please contact admin.')
+        }
     )
   }
 

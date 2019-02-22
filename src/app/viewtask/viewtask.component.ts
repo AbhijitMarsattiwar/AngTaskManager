@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from '../model/task';
 import { TaskserviceService } from '../service/taskservice.service';
 import { Router } from '@angular/router';
-import { jsonpCallbackContext } from '@angular/common/http/src/module';
 
 @Component({
   selector: 'viewtask',
@@ -27,7 +26,8 @@ export class ViewtaskComponent implements OnInit {
   loadAllTasks(){
     let observable=this.taskService.getAllTasks();
     observable.subscribe((obserTasks:Task[])=>
-      this.tasksArr=obserTasks       
+      this.tasksArr=obserTasks,
+      (error)=> alert('Error Occured while loading, please contact admin and ensure backend services are UP.')
     )
   }
 
@@ -37,10 +37,9 @@ export class ViewtaskComponent implements OnInit {
     task.isEnded = 1; // 1 for ending.
     this.taskService.updateTask(task).subscribe(
       (task)=>{
-        console.log('successfull'+task)
-      //  this.loadEmployee()
+        alert('Task Updated Successfully');
       },
-      (error)=>console.log(error)
+      (error)=> alert('Error Occured while saving, please contact admin. Error is'+error)
     )
   }
 
@@ -51,17 +50,4 @@ export class ViewtaskComponent implements OnInit {
     localStorage.setItem("taskId",task.taskId.toString());
     this.router.navigate(['edit']);
   }
-
-
-  insertEmployee(){
-    this.taskService.saveTask(null).subscribe(
-        (employee)=>{
-          console.log('succesfulle');
-          this.loadAllTasks();
-        },
-        (error)=>console.log(error),
-    )
-  }
-
-
 }

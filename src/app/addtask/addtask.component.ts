@@ -50,9 +50,9 @@ export class AddtaskComponent implements OnInit {
     this.taskService.saveTask(task).subscribe(
         (task)=>{
           console.log('successfull'+task)
-        //  this.loadEmployee()
+          alert('Task saved successfully')
         },
-        (error)=>console.log(error)
+        (error)=>alert('Error Occured while saving, please contact admin.')
     )
   }
 
